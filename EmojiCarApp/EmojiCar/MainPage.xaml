@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:EmojiCar" 
+    Title="Emoji Car"
+    xmlns:vm="clr-namespace:EmojiCar.ViewModel"
+    x:Class="EmojiCar.MainPage">
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel/>
+    </ContentPage.BindingContext>    
+<!--    <StackLayout>
+        <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+    </StackLayout>-->
+    <Grid VerticalOptions="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- 0 Title -->
+            <RowDefinition Height="Auto"/> <!-- 1 Warning -->
+            <RowDefinition Height="Auto"/> <!-- 2 Server -->
+            <RowDefinition Height="Auto"/> <!-- 3 Duration -->
+            <RowDefinition Height="Auto"/> <!-- 4 Emoji Button-->
+        </Grid.RowDefinitions>
+        <!-- 0 Title -->
+        <Label
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Margin="10"
+            Text="Emoji Car"
+            HorizontalTextAlignment="Center"
+            FontSize="Large"
+            FontAttributes="Bold"/>   
+        
+        <!-- 1 Warning -->
+        <Label
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="10"
+            Text="Warning! Follow the rules in your jurisdiction about using phone while driving."
+            HorizontalTextAlignment="Center"
+            FontAttributes="Bold"/>
+
+        <!-- 2 Server Name -->
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            Margin="10,0,0,0"
+            Text="Server http://"/>
+        <Entry
+            Grid.Row="2"
+            Grid.Column="1"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            Margin="5"
+            Placeholder="Server IP Address"
+            Text="{Binding ServerIP, Mode=TwoWay}"/>
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            Text="Set"
+            Command="{Binding SetServerIPCmd}"/>
+        
+        <!-- 3 Duration -->
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            Margin="10,0,0,0"
+            Text="Duration (sec)"/>
+        <Entry
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            Margin="5"
+            Keyboard="Numeric"
+            Placeholder="Duration"
+            Text="{Binding DurationSec, Mode=TwoWay}"/>
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            Text="Set"
+            Command="{Binding SetDurationCmd}"/>
+
+        <!-- 4 Emoji button -->
+        <Button
+            Grid.Row="4"
+            Grid.Column="0"
+            HorizontalOptions="End"
+            Margin="0,0,0,20"
+            Text="Smile"
+            Command="{Binding SmileCmd}"/>
+
+        <Button
+            Grid.Row="4"
+            Grid.Column="2"
+            HorizontalOptions="Start"
+            Margin="0,0,0,20"
+            Text="Angry"
+            Command="{Binding AngryCmd}"/>        
+    </Grid>
+</ContentPage>
