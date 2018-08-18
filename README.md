@@ -1,3 +1,4 @@
 # EmojiCar
-This repository is for the software used in the "Upcoming" Hackster.io project. It consists of source code for EmojiCarApp and source code for Netduino.
-Will provide link to Hackster.io project once it is published. Stay tuned.
+This repository is for the software used in the "Emoji Car" Hackster.io project. It consists of source code for EmojiCar App and source code for Netduino.
+You can find the project here:
+https://www.hackster.io/sameerk/emoji-car-408c7a

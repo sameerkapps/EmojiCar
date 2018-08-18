@@ -156,4 +156,12 @@
       <Name>EmojiCar</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\angry.png" />
+    <BundleResource Include="Resources\angry%402x.png" />
+    <BundleResource Include="Resources\angry%403x.png" />
+    <BundleResource Include="Resources\smiley.png" />
+    <BundleResource Include="Resources\smiley%402x.png" />
+    <BundleResource Include="Resources\smiley%403x.png" />
+  </ItemGroup>
 </Project>

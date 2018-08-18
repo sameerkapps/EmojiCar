@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto"/> <!-- 2 Server -->
             <RowDefinition Height="Auto"/> <!-- 3 Duration -->
             <RowDefinition Height="Auto"/> <!-- 4 Emoji Button-->
+            <RowDefinition Height="Auto"/> <!-- 5 Message-->
         </Grid.RowDefinitions>
         <!-- 0 Title -->
         <Label
@@ -99,7 +100,9 @@
             Grid.Column="0"
             HorizontalOptions="End"
             Margin="0,0,0,20"
+            ContentLayout="Top"
             Text="Smile"
+            Image="smiley.png"
             Command="{Binding SmileCmd}"/>
 
         <Button
@@ -107,7 +110,19 @@
             Grid.Column="2"
             HorizontalOptions="Start"
             Margin="0,0,0,20"
+            ContentLayout="Top"
             Text="Angry"
-            Command="{Binding AngryCmd}"/>        
+            Image="angry.png"
+            Command="{Binding AngryCmd}"/> 
+        
+        <!-- 5 Error message -->
+         <Label
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="Center"
+            Margin="10,10,0,10"
+            Text="{Binding Message, Mode=OneWay}"/>
     </Grid>
 </ContentPage>

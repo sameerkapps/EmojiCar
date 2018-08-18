@@ -6,11 +6,8 @@ using System;
 using System.Windows.Input;
 using EmojiCar.Commands;
 using MvvmAtom;
-
-// Furure - This is my hobby/weekend project. App is not robust to handle potential errors. 
-// Disable when not connected to internet
-// Error handling
-// Settings to store the last IP address
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace EmojiCar.ViewModel
 {
@@ -30,9 +27,18 @@ namespace EmojiCar.ViewModel
             SmileCmd = new SendSmileCommand(this);
             AngryCmd = new SendAngryCommand(this);
 
-            // In future, Get the sever IP from the settings
-            ServerIP = "10.11.98.11";
+            // check the internet connection and display appropriate message
+            IsConnected = Connectivity.NetworkAccess == NetworkAccess.Internet;
+            DisplayConnectivityMessage();
+            // handle connectivity changes
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+
+            // get server ip from preferences
+            ServerIP = Preferences.Get(ServerIPKey, string.Empty);
             SetServerIPCmd.Execute(null);
+
+            // get duration from preferences
+            DurationSec = Preferences.Get(DurationKey, 0);
         }
 
         /// <summary>
@@ -48,9 +54,10 @@ namespace EmojiCar.ViewModel
 
             set
             {
-                if(_serverIP != value)
+                if (_serverIP != value)
                 {
                     _serverIP = value;
+                    Preferences.Set(ServerIPKey, ServerIP);
                     RaisePropertyChanged();
                 }
             }
@@ -59,7 +66,7 @@ namespace EmojiCar.ViewModel
         /// <summary>
         /// On Duration
         /// </summary>
-        int _duration = 10;
+        int _duration = 5;
         public int DurationSec
         {
             get
@@ -68,10 +75,52 @@ namespace EmojiCar.ViewModel
             }
             set
             {
-                if(_duration != value)
+                if (_duration != value)
                 {
                     _duration = value;
+                    Preferences.Set(DurationKey, DurationSec);
                     RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Result of an operation
+        /// </summary>
+        string _message;
+        public string Message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                if (!string.Equals(_message, value))
+                {
+                    _message = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Is connected to internet
+        /// </summary>
+        bool _isConnected;
+        public bool IsConnected
+        {
+            get
+            {
+                return _isConnected;
+            }
+            set
+            {
+                if (_isConnected != value)
+                {
+                    _isConnected = value;
+                    RaisePropertyChanged();
+                    DisplayConnectivityMessage();
                 }
             }
         }
@@ -111,5 +160,41 @@ namespace EmojiCar.ViewModel
         {
             get;
         }
+
+        #region private methods
+        /// <summary>
+        /// Connectivity change handler
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(() => IsConnected = (e.NetworkAccess == NetworkAccess.Internet));
+        }
+
+        /// <summary>
+        /// Displays message as per the connectivity
+        /// </summary>
+        private void DisplayConnectivityMessage()
+        {
+            if (!IsConnected)
+            {
+                Message = "!!! Not connected to the Internet !!!";
+            }
+            else
+            {
+                Message = string.Empty;
+            }
+        }
+        #endregion
+
+        #region keys for preference storage
+        // key for server ip
+        private const string ServerIPKey = "ServerIP";
+
+        // key for duration
+        private const string DurationKey = "Duration";
+        #endregion
+
     }
 }

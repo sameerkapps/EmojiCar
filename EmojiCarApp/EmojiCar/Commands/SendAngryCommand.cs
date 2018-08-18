@@ -4,6 +4,7 @@
 // ////////////////////////////////////////////////////////////
 using System;
 using EmojiCar.NetDClient;
+using EmojiCar.ViewModel;
 using MvvmAtom;
 
 namespace EmojiCar.Commands
@@ -30,19 +31,38 @@ namespace EmojiCar.Commands
         /// <param name="parameter">Parameter.</param>
         public override bool CanExecute(object parameter)
         {
-            return true;
+            return MainPageViewModel.IsConnected;
         }
 
         /// <summary>
         /// Sends the command to show angry face
         /// </summary>
         /// <param name="parameter">Parameter.</param>
-        public override void Execute(object parameter)
+        public async override void Execute(object parameter)
         {
             if(CanExecute(null))
             {
-                NetduinoClient.Instance.Angry();
+                var message = await NetduinoClient.Instance.Angry();
+                MainPageViewModel.Message = message;
             }
         }
+
+        /// <summary>
+        /// Evaluates the can execute changed based on the internet connectivity
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        public override void EvaluateCanExecuteChanged(string propName)
+        {
+            if(nameof(MainPageViewModel.IsConnected).Equals(propName))
+            {
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets the main page view model.
+        /// </summary>
+        /// <value>The main page view model.</value>
+        private MainPageViewModel MainPageViewModel => (MainPageViewModel)ViewModel;
     }
 }

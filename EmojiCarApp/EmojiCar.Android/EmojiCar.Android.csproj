@@ -82,6 +82,16 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\drawable\angry.png" />
+    <AndroidResource Include="Resources\drawable\smiley.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\angry.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\smiley.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\angry.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\smiley.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\angry.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\smiley.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\angry.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\smiley.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

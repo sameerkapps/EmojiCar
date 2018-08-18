@@ -3,8 +3,9 @@
 // // License: MIT License                                   //
 // ////////////////////////////////////////////////////////////
 using System;
-using System.Diagnostics;
+
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace EmojiCar.NetDClient
 {
@@ -29,16 +30,17 @@ namespace EmojiCar.NetDClient
         /// <summary>
         /// Sends smile command using POST verb on the REST API
         /// </summary>
-        async public void Smile()
+        async public Task<string> Smile()
         {
             try
             {
                 HttpResponseMessage response = await Client.PostAsync(BaseAddress + "Smile", new StringContent(string.Empty));
+
+                return response.StatusCode.ToString();
             }
             catch (Exception ex)
             {
-                // In future, this should throw error which will be caught by the ViewModel to display appropriate error message
-                Debug.WriteLine(ex.Message);
+                return ex.Message;
             }
 
         }
@@ -46,33 +48,35 @@ namespace EmojiCar.NetDClient
         /// <summary>
         /// Sends angry command using POST verb on the REST API
         /// </summary>
-        async public void Angry()
+        async public Task<string> Angry()
         {
             try
             {
                 HttpResponseMessage response = await Client.PostAsync(BaseAddress + "Angry", new StringContent(string.Empty));
+
+                return response.StatusCode.ToString();
             }
             catch (Exception ex)
             {
-                // In future, this should throw error which will be caught by the ViewModel to display appropriate error message
-                Debug.WriteLine(ex.Message);
+                return ex.Message;
             }
         }
 
         /// <summary>
         /// Sends duration using POST verb on the REST API
         /// </summary>
-        async public void SetDuration(int sec)
+        async public Task<string> SetDuration(int sec)
         {
             try
             {
                 string durationURL = $"{BaseAddress}SetDuration?t={sec}";
                 HttpResponseMessage response = await Client.PostAsync(durationURL, new StringContent(string.Empty));
+
+                return response.StatusCode.ToString();
             }
             catch (Exception ex)
             {
-                // In future, this should throw error which will be caught by the ViewModel to display appropriate error message
-                Debug.WriteLine(ex.Message);
+                return ex.Message;
             }
         }
 
@@ -94,11 +98,11 @@ namespace EmojiCar.NetDClient
             }
         }
 
-        #region fields
+#region fields
         // singleton instance
         private static NetduinoClient _client = new NetduinoClient();
         // HttpClient to make the calls
         protected HttpClient Client { get; private set; } = new HttpClient();
-        #endregion
+#endregion
     }
 }
